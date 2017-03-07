@@ -1,0 +1,5 @@
+check process mysql_quota_usage_exporter
+  with pidfile /var/vcap/sys/run/mysql_quota_usage_exporter/mysql_quota_usage_exporter.pid
+  start program "/var/vcap/jobs/mysql_quota_usage_exporter/bin/mysql_quota_usage_exporter_ctl start"
+  stop program "/var/vcap/jobs/mysql_quota_usage_exporter/bin/mysql_quota_usage_exporter_ctl stop"
+  group vcap

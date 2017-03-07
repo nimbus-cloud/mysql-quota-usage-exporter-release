@@ -1,0 +1,29 @@
+---
+name: mysql_quota_usage_exporter
+
+packages:
+  - mysql_quota_usage_exporter
+
+templates:
+  bin/mysql_quota_usage_exporter_ctl: bin/mysql_quota_usage_exporter_ctl
+
+properties:
+  mysql_quota_usage_exporter.web.listen:
+    description: "Address on which to expose metrics and web interface."
+    default: "9118"
+  mysql_quota_usage_exporter.namespace:
+    description: "Namespace for the Mysql quota usage metrics."
+    default: "mysql"
+  mysql_quota_usage_exporter.db.user:
+    description: "User to connect to Mysql broker data base."
+    default: "root"
+  mysql_quota_usage_exporter.db.pass:
+    description: "Password to connect to Mysql broker data base."
+  mysql_quota_usage_exporter.db.host:
+    description: "Host to connect to Mysql broker data base."
+  mysql_quota_usage_exporter.db.name:
+    description: "Mysql broker data base name"
+    default: "mysql_broker"
+  mysql_quota_usage_exporter.db.port:
+    description: "Port to connect to Mysql broker data base."
+    default: "3306"

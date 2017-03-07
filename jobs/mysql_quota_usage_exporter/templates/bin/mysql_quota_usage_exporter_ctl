@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -eu
+
+RUN_DIR=/var/vcap/sys/run/mysql_quota_usage_exporter
+LOG_DIR=/var/vcap/sys/log/mysql_quota_usage_exporter
+TMP_DIR=/var/vcap/sys/tmp/mysql_quota_usage_exporter
+STORE_DIR=/var/vcap/store/mysql_quota_usage_exporter
+mkdir -p ${RUN_DIR} ${LOG_DIR} ${TMP_DIR} ${STORE_DIR}
+
+PIDFILE=${RUN_DIR}/mysql_quota_usage_exporter.pid
+
+source /var/vcap/packages/mysql_quota_usage_exporter/common/utils.sh
+
+export PATH=/var/vcap/packages/mysql_quota_usage_exporter/bin:${PATH}
+
+case $1 in
+  start)
+    pid_guard ${PIDFILE} "mysql_quota_usage_exporter"
+    echo $$ > ${PIDFILE}
+
+    exec mysql_quota_usage_exporter \
+      -web.listen=":<%= p('mysql_quota_usage_exporter.web.listen') %>" \
+      -namespace="<%= p('mysql_quota_usage_exporter.namespace') %>" \
+      -db.User="<%= p('mysql_quota_usage_exporter.db.user') %>" \
+      -db.Pass="<%= p('mysql_quota_usage_exporter.db.pass') %>" \
+      -db.Host="<%= p('mysql_quota_usage_exporter.db.host') %>" \
+      -db.Name="<%= p('mysql_quota_usage_exporter.db.name') %>" \
+      -db.Port="<%= p('mysql_quota_usage_exporter.db.port') %>" \
+      >>  ${LOG_DIR}/mysql_quota_usage_exporter.stdout.log \
+      2>> ${LOG_DIR}/mysql_quota_usage_exporter.stderr.log
+    ;;
+
+  stop)
+    kill_and_wait ${PIDFILE}
+    ;;
+
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+
+esac
+exit 0
