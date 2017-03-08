@@ -8,5 +8,6 @@ cp -a ${BOSH_COMPILE_TARGET}/common/* ${BOSH_INSTALL_TARGET}/common
 
 # Extract mysql_quota_usage_exporter package
 mkdir -p ${BOSH_INSTALL_TARGET}/bin
-tar xzvf ${BOSH_COMPILE_TARGET}/mysql_quota_usage_exporter/mysql_quota_usage_exporter.tar.gz
-cp -a ${BOSH_COMPILE_TARGET}/mysql_quota_usage_exporter/* ${BOSH_INSTALL_TARGET}/bin
+cd ${BOSH_COMPILE_TARGET}/mysql_quota_usage_exporter
+tar xzvf mysql_quota_usage_exporter.tar.gz
+cp -a ./* ${BOSH_INSTALL_TARGET}/bin
