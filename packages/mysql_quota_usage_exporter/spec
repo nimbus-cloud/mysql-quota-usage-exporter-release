@@ -2,4 +2,5 @@
 name: mysql_quota_usage_exporter
 
 files:
+- common/utils.sh
 - mysql_quota_usage_exporter/mysql_quota_usage_exporter.tar.gz
